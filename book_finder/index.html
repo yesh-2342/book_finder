@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book Finder — Open Library</title>
+  <link rel="preconnect" href="https://covers.openlibrary.org">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:,">
+  <meta name="description" content="Search books by title, author, subject, or ISBN using Open Library.">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Book Finder</h1>
+    <div class="header-actions">
+      <button id="toggle-favorites" class="btn" aria-pressed="false" title="Show Favorites">❤ Favorites</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="controls" aria-label="Search Controls">
+      <form id="search-form" autocomplete="off">
+        <div class="row">
+          <label class="field">
+            <span>Search by</span>
+            <select id="search-type">
+              <option value="all">All</option>
+              <option value="title" selected>Title</option>
+              <option value="author">Author</option>
+              <option value="subject">Subject</option>
+              <option value="isbn">ISBN</option>
+            </select>
+          </label>
+
+          <label class="field grow">
+            <span>Query</span>
+            <input id="search-query" type="text" placeholder="e.g., The Hobbit" required>
+          </label>
+
+          <label class="field">
+            <span>Language</span>
+            <select id="language">
+              <option value="">Any</option>
+              <option value="eng">English</option>
+              <option value="spa">Spanish</option>
+              <option value="fre">French</option>
+              <option value="ger">German</option>
+              <option value="ita">Italian</option>
+              <option value="por">Portuguese</option>
+              <option value="rus">Russian</option>
+              <option value="hin">Hindi</option>
+              <option value="jpn">Japanese</option>
+              <option value="chi">Chinese</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="row">
+          <label class="field">
+            <span>Year from</span>
+            <input id="year-from" type="number" inputmode="numeric" placeholder="e.g., 1950" min="0">
+          </label>
+          <label class="field">
+            <span>Year to</span>
+            <input id="year-to" type="number" inputmode="numeric" placeholder="e.g., 2024" min="0">
+          </label>
+
+          <label class="field">
+            <span>Sort</span>
+            <select id="sort-by">
+              <option value="relevance">Relevance</option>
+              <option value="year-asc">First publish year ↑</option>
+              <option value="year-desc">First publish year ↓</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Per page</span>
+            <select id="per-page">
+              <option value="10">10</option>
+              <option value="20" selected>20</option>
+              <option value="40">40</option>
+              <option value="80">80</option>
+            </select>
+          </label>
+
+          <div class="actions">
+            <button type="submit" class="btn primary" id="search-button">Search</button>
+            <button type="button" id="clear-button" class="btn ghost">Clear</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section class="meta" aria-live="polite" aria-atomic="true">
+      <div id="status"></div>
+    </section>
+
+    <section class="results" aria-label="Results">
+      <div id="grid" class="grid" role="list"></div>
+      <div id="empty" class="empty hidden">No results. Try a different search.</div>
+      <div id="error" class="error hidden" role="alert"></div>
+      <div id="loading" class="loading hidden">Loading…</div>
+    </section>
+
+    <nav class="pagination" aria-label="Pagination controls">
+      <button id="prev" class="btn" disabled>Prev</button>
+      <span class="page-indicator">
+        Page <input id="page-number" type="number" min="1" value="1"> of <span id="total-pages">1</span>
+      </span>
+      <button id="next" class="btn" disabled>Next</button>
+    </nav>
+  </main>
+
+  <template id="book-card-template">
+    <article class="card" role="listitem">
+      <div class="cover-wrap">
+        <img class="cover" alt="Book cover" loading="lazy">
+        <button class="fav" title="Add to favorites" aria-pressed="false">❤</button>
+      </div>
+      <div class="card-body">
+        <h3 class="title"></h3>
+        <p class="authors"></p>
+        <p class="meta-line"></p>
+        <div class="card-actions">
+          <a class="btn tiny primary action-read" href="#" target="_blank" rel="noreferrer">Read</a>
+          <a class="btn tiny ghost action-download" href="#" target="_blank" rel="noreferrer">Download</a>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <footer class="app-footer">
+    <p>Data from <a href="https://openlibrary.org/" target="_blank" rel="noreferrer">Open Library</a>. Built for Alex.</p>
+  </footer>
+
+  <script src="app.js" type="module"></script>
+  
+  <noscript>
+    Please enable JavaScript to use Book Finder.
+  </noscript>
+  
+</body>
+</html>
+
+
